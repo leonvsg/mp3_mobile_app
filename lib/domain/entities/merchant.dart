@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:equatable/equatable.dart';
 
 import 'currency.dart';
-import 'order_params.dart';
+import 'enums.dart';
 
 class Merchant extends Equatable {
   final String login;

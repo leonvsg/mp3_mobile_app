@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import 'date_period.dart';
 import 'amount_range.dart';
-import 'order_params.dart';
+import 'enums.dart';
 
 class OrdersSearchFilter extends Equatable {
   final AmountRange? amountRange;

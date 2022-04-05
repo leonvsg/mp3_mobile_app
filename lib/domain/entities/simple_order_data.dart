@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'order_params.dart';
+import 'enums.dart';
 
 class SimpleOrderData extends Equatable {
   final int? actionCode;

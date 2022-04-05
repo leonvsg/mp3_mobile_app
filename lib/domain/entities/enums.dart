@@ -63,5 +63,5 @@ enum Permission {
   bundleCatalogEdit,
   reverseHold,
   reverseDeposit,
-  unknown
+  unknown,
 }

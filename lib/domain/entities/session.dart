@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import 'accessible_merchant.dart';
-import 'order_params.dart';
+import 'enums.dart';
 
 class Session extends Equatable {
   final String sessionId;

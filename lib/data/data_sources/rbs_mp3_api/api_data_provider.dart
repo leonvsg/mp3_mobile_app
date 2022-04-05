@@ -3,11 +3,12 @@ import 'package:mp3_mobile_app/common/http/http_client.dart';
 
 import 'dto.dart';
 
-//TODO: update http req/res logging
-
 typedef Headers = Map<String,String>;
 
-class RbsApiService {
+class RbsApiDataProvider {
+
+  //TODO: update http req/res logging
+
   static const _baseUrl = 'https://web.rbsuat.com';
   static const _applicationContextUrl = '$_baseUrl/ab/mp3';
   static const _acceptedResponseCodes = [200, 400];
@@ -19,7 +20,7 @@ class RbsApiService {
 
   final HttpClient httpClient;
 
-  const RbsApiService(this.httpClient);
+  const RbsApiDataProvider(this.httpClient);
 
   Future<AuthResponse> auth(AuthRequest requestBody) async {
     //log('Try to authenticate by login ${requestBody.login}');
@@ -30,6 +31,7 @@ class RbsApiService {
       acceptedResponseCodes: _acceptedResponseCodes,
     );
     //log('Authentication result: $response');
+
     return AuthResponse.fromJson(jsonDecode(response));
   }
 
@@ -45,6 +47,7 @@ class RbsApiService {
       additionalHeaders: headers,
     );
     //log('Merchant information response: $response');
+
     return MerchantInformationResponse.fromJson(json.decode(response));
   }
 
@@ -56,6 +59,7 @@ class RbsApiService {
       additionalHeaders: headers,
     );
     //log('UI settings: $response');
+
     return UiSettingsResponse.fromJson(json.decode(response));
   }
 
@@ -71,6 +75,7 @@ class RbsApiService {
       additionalHeaders: headers,
     );
     //log('Transaction list response: $response');
+
     return TransactionListResponse.fromJson(json.decode(response));
   }
 
@@ -86,6 +91,7 @@ class RbsApiService {
       additionalHeaders: headers,
     );
     //log('Transaction details response: $response');
+
     return TransactionDetailsResponse.fromJson(json.decode(response));
   }
 
@@ -94,6 +100,7 @@ class RbsApiService {
       'x-auth-token': sessionId,
     };
     headers.addAll(_headers);
+
     return headers;
   }
 }
