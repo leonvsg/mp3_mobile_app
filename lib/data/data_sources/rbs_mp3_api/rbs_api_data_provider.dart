@@ -1,12 +1,13 @@
 import 'dart:convert';
+
 import 'package:mp3_mobile_app/common/http/http_client.dart';
 
+import 'rbs_api.dart';
 import 'dto.dart';
 
-typedef Headers = Map<String,String>;
+typedef Headers = Map<String, String>;
 
-class RbsApiDataProvider {
-
+class RbsApiDataProvider implements RbsApi {
   //TODO: update http req/res logging
 
   static const _baseUrl = 'https://web.rbsuat.com';
@@ -22,6 +23,7 @@ class RbsApiDataProvider {
 
   const RbsApiDataProvider(this.httpClient);
 
+  @override
   Future<AuthResponse> auth(AuthRequest requestBody) async {
     //log('Try to authenticate by login ${requestBody.login}');
     var response = await httpClient.post(
@@ -35,10 +37,11 @@ class RbsApiDataProvider {
     return AuthResponse.fromJson(jsonDecode(response));
   }
 
+  @override
   Future<MerchantInformationResponse> fetchMerchantInformation(
-      MerchantInformationRequest requestBody,
-      String sessionId,
-      ) async {
+    MerchantInformationRequest requestBody,
+    String sessionId,
+  ) async {
     //log('Get merchant information: $requestBody');
     var headers = _getHeadersWithAuth(sessionId);
     var response = await httpClient.post(
@@ -51,6 +54,7 @@ class RbsApiDataProvider {
     return MerchantInformationResponse.fromJson(json.decode(response));
   }
 
+  @override
   Future<UiSettingsResponse> fetchUiSettings(String sessionId) async {
     //log('Get UI settings');
     var headers = _getHeadersWithAuth(sessionId);
@@ -63,10 +67,11 @@ class RbsApiDataProvider {
     return UiSettingsResponse.fromJson(json.decode(response));
   }
 
+  @override
   Future<TransactionListResponse> fetchTransactionList(
-      TransactionListRequest requestBody,
-      String sessionId,
-      ) async {
+    TransactionListRequest requestBody,
+    String sessionId,
+  ) async {
     //log('Get transaction list: $requestBody');
     var headers = _getHeadersWithAuth(sessionId);
     var response = await httpClient.post(
@@ -79,10 +84,11 @@ class RbsApiDataProvider {
     return TransactionListResponse.fromJson(json.decode(response));
   }
 
+  @override
   Future<TransactionDetailsResponse> fetchTransactionDetails(
-      TransactionDetailsRequest requestBody,
-      String sessionId,
-      ) async {
+    TransactionDetailsRequest requestBody,
+    String sessionId,
+  ) async {
     //log('Get transaction details: $requestBody');
     var headers = _getHeadersWithAuth(sessionId);
     var response = await httpClient.post(
