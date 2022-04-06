@@ -1,24 +1,21 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:mp3_mobile_app/domain/entities/session.dart';
 
 class SecureStorageDataProvider {
   static const _sessionIdKey = 'sessionId';
   static const _merchantLoginKey = 'merchantLogin';
-  static const _sessionKey = 'session';
+  static const _userLoginKey = 'userLogin';
 
   final FlutterSecureStorage secureStorage;
 
   const SecureStorageDataProvider(this.secureStorage);
 
-  Future<void> saveSession(Session session) async {
-    //TODO: implement
-    throw UnimplementedError();
+  Future<void> saveUserLogin(String userLogin) async {
+    await _saveParam(key: _userLoginKey, value: userLogin);
   }
 
-  Future<Session> getSession() async {
-    //TODO: implement
-    throw UnimplementedError();
+  Future<String?> getUserLogin() async {
+    return await _getParam(_userLoginKey);
   }
 
   Future<void> saveMerchantLogin(String merchantLogin) async {

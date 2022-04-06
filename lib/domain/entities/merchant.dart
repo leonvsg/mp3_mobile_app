@@ -11,7 +11,7 @@ class Merchant extends Equatable {
   final String? openIdToken;
   final Currency defaultCurrency;
   final List<Currency> currencies;
-  final List<Permission> options;
+  final List<Permission> permissions;
   final int sessionTimeoutMinutes;
   final List<Locale> locales;
   final String? email;
@@ -25,7 +25,7 @@ class Merchant extends Equatable {
     this.openIdToken,
     required this.defaultCurrency,
     required this.currencies,
-    required this.options,
+    required this.permissions,
     required this.sessionTimeoutMinutes,
     required this.locales,
     this.email,
@@ -35,7 +35,20 @@ class Merchant extends Equatable {
   });
 
   @override
-  List<Object?> get props => [login];
+  List<Object?> get props => [
+        login,
+        fullName,
+        openIdToken,
+        defaultCurrency,
+        currencies,
+        permissions,
+        sessionTimeoutMinutes,
+        locales,
+        email,
+        mainUrl,
+        merchantTerms,
+        knp,
+      ];
 
   @override
   bool get stringify => true;
