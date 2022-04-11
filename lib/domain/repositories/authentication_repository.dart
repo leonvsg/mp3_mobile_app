@@ -1,4 +1,4 @@
-import 'package:mp3_mobile_app/domain/entities/session.dart';
+import 'package:mp3_mobile_app/domain/models/session.dart';
 
 abstract class AuthenticationRepository {
   Future<Session?> logIn({

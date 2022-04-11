@@ -1,4 +1,4 @@
-import 'package:mp3_mobile_app/domain/entities/merchant.dart';
+import 'package:mp3_mobile_app/domain/models/merchant.dart';
 
 abstract class MerchantRepository {
   Future<Merchant?> getCurrentMerchant();
