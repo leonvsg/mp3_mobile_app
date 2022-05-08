@@ -1,4 +1,7 @@
 import 'package:mp3_mobile_app/data/data_sources/db/accessible_merchants_dao.dart';
+import 'package:mp3_mobile_app/data/data_sources/db/currencies_dao.dart';
+import 'package:mp3_mobile_app/data/data_sources/db/merchants_dao.dart';
+import 'package:mp3_mobile_app/data/data_sources/db/session_dao.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/auth/auth_request.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/auth/auth_response.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/mapper.dart';
@@ -12,14 +15,21 @@ import 'package:mp3_mobile_app/domain/repositories/authentication_repository.dar
 
 import '../error_handler.dart';
 
-class RbsAuthenticationRepository implements AuthenticationRepository {
-  final AccessibleMerchantsDao merchantsDao;
+class Mp3AuthenticationRepository implements AuthenticationRepository {
+  final AccessibleMerchantsDao accessibleMerchantsDao;
+  final MerchantsDao merchantsDao;
+  final CurrenciesDao currenciesDao;
+  final SessionDao sessionDao;
   final RbsApi apiClient;
   final SecureStorage secureStorage;
   final ErrorHandler errorHandler;
 
-  const RbsAuthenticationRepository({
+
+  const Mp3AuthenticationRepository({
+    required this.accessibleMerchantsDao,
     required this.merchantsDao,
+    required this.currenciesDao,
+    required this.sessionDao,
     required this.apiClient,
     required this.secureStorage,
     required this.errorHandler,
@@ -45,8 +55,9 @@ class RbsAuthenticationRepository implements AuthenticationRepository {
         secureStorage.saveSessionId(session.sessionId);
         secureStorage.saveMerchantLogin(session.merchant.login);
         secureStorage.saveUserLogin(session.userLogin);
-        merchantsDao.deleteMerchants();
-        //merchantsDao.saveMerchants(session.accessibleMerchants);
+        sessionDao.saveOrUpdateSession(SessionDto.fromModel(session));
+        //accessibleMerchantsDao.saveAccessibleMerchants();
+        //merchantsDao.saveOrUpdateMerchant();
         //TODO save session and merchant to db
       } else if (merchantResponse is MerchantInformationResponseFail) {
         errorHandler.handleError(merchantResponse.error);

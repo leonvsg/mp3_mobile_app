@@ -6,7 +6,7 @@ import 'package:mp3_mobile_app/data/data_sources/db/tables.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
-import 'accessible_merchants_dao.dart';
+import 'drift_dao/drift_accessible_merchants_dao.dart';
 
 part 'database.g.dart';
 
@@ -22,7 +22,7 @@ part 'database.g.dart';
     MerchantCurrencies,
   ],
   daos: [
-    AccessibleMerchantsDao,
+    DriftAccessibleMerchantsDao,
   ],
 )
 class AppDb extends _$AppDb {
