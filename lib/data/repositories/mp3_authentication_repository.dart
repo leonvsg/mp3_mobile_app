@@ -16,18 +16,12 @@ import 'package:mp3_mobile_app/domain/repositories/authentication_repository.dar
 import '../error_handler.dart';
 
 class Mp3AuthenticationRepository implements AuthenticationRepository {
-  final AccessibleMerchantsDao accessibleMerchantsDao;
-  final MerchantsDao merchantsDao;
-  final CurrenciesDao currenciesDao;
   final SessionDao sessionDao;
   final RbsApi apiClient;
   final SecureStorage secureStorage;
   final ErrorHandler errorHandler;
 
   const Mp3AuthenticationRepository({
-    required this.accessibleMerchantsDao,
-    required this.merchantsDao,
-    required this.currenciesDao,
     required this.sessionDao,
     required this.apiClient,
     required this.secureStorage,
