@@ -1,6 +1,3 @@
-import 'package:mp3_mobile_app/data/data_sources/db/accessible_merchants_dao.dart';
-import 'package:mp3_mobile_app/data/data_sources/db/currencies_dao.dart';
-import 'package:mp3_mobile_app/data/data_sources/db/merchants_dao.dart';
 import 'package:mp3_mobile_app/data/data_sources/db/session_dao.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/auth/auth_request.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/auth/auth_response.dart';
