@@ -10,19 +10,15 @@ import 'package:mp3_mobile_app/domain/models/session.dart';
 import 'package:mp3_mobile_app/domain/exceptions.dart';
 import 'package:mp3_mobile_app/domain/repositories/authentication_repository.dart';
 
-import '../error_handler.dart';
-
 class Mp3AuthenticationRepository implements AuthenticationRepository {
   final SessionDao sessionDao;
   final RbsApi apiClient;
   final SecureStorage secureStorage;
-  final ErrorHandler errorHandler;
 
   const Mp3AuthenticationRepository({
     required this.sessionDao,
     required this.apiClient,
     required this.secureStorage,
-    required this.errorHandler,
   });
 
   @override
@@ -48,14 +44,14 @@ class Mp3AuthenticationRepository implements AuthenticationRepository {
         secureStorage.saveUserLogin(session.userLogin);
         sessionDao.saveOrUpdateSession(session);
       } else if (merchantResponse is MerchantInformationResponseFail) {
-        errorHandler.handleError(merchantResponse.error);
+        //TODO: handle error
       } else {
         throw RemoteRepositoryException(
           'Unexpected MerchantInformationResponse: ${merchantResponse.toString()}',
         );
       }
     } else if (authResponse is AuthResponseError) {
-      errorHandler.handleError(authResponse.error);
+      //TODO: handle error
     } else {
       throw RemoteRepositoryException(
         'Unexpected AuthResponse: ${authResponse.toString()}',
