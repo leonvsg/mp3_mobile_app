@@ -56,11 +56,6 @@ class Mp3AuthenticationRepository implements AuthenticationRepository {
         secureStorage.saveMerchantLogin(session.merchant.login);
         secureStorage.saveUserLogin(session.userLogin);
         sessionDao.saveOrUpdateSession(session);
-        accessibleMerchantsDao.saveAccessibleMerchants(
-          merchants: session.accessibleMerchants,
-          sessionId: sessionId,
-        );
-        merchantsDao.saveOrUpdateMerchant(session.merchant);
       } else if (merchantResponse is MerchantInformationResponseFail) {
         errorHandler.handleError(merchantResponse.error);
       } else {
