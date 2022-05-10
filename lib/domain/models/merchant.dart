@@ -15,7 +15,7 @@ class Merchant extends Equatable {
   final int sessionTimeoutMinutes;
   final List<Locale> locales;
   final String? email;
-  final String mainUrl;
+  final String? mainUrl;
   final List<int>? merchantTerms;
   final String? knp;
 

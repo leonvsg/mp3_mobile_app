@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-@DataClassName('MerchantCurrency')
+@DataClassName('MerchantCurrencyDto')
 class MerchantCurrencies extends Table {
   TextColumn get merchant => text().references(Merchants, #login)();
   TextColumn get currency => text().references(Currencies, #alphabeticCode)();
@@ -9,6 +9,7 @@ class MerchantCurrencies extends Table {
   Set<Column> get primaryKey => {merchant,currency};
 }
 
+@DataClassName('MerchantPermissionDto')
 class MerchantPermissions extends Table {
   TextColumn get merchant => text().references(Merchants, #login)();
   TextColumn get permission => text()();
@@ -17,20 +18,22 @@ class MerchantPermissions extends Table {
   Set<Column> get primaryKey => {merchant,permission};
 }
 
-@DataClassName('MerchantLocal')
+@DataClassName('MerchantLocaleDto')
 class MerchantLocales extends Table {
   TextColumn get merchant => text().references(Merchants, #login)();
-  IntColumn get local => integer()();
+  TextColumn get locale => text()();
 
   @override
-  Set<Column> get primaryKey => {merchant,local};
+  Set<Column> get primaryKey => {merchant,locale};
 }
 
+@DataClassName('MerchantTermsDto')
 class MerchantTerms extends Table {
   TextColumn get merchant => text().references(Merchants, #login)();
   IntColumn get term => integer()();
 }
 
+@DataClassName('AccessibleMerchantDto')
 class AccessibleMerchants extends Table {
   TextColumn get merchantLogin => text()();
   TextColumn get merchantFullName => text()();
@@ -41,17 +44,18 @@ class AccessibleMerchants extends Table {
   Set<Column> get primaryKey => {merchantLogin,session};
 }
 
+@DataClassName('SessionDto')
 class Sessions extends Table {
   TextColumn get tokenHash => text()();
   TextColumn get userLogin => text()();
   TextColumn get merchant => text().references(Merchants, #login)();
   DateTimeColumn get registerTime => dateTime()();
-  BoolColumn get active => boolean()();
 
   @override
   Set<Column> get primaryKey => {tokenHash};
 }
 
+@DataClassName('MerchantDto')
 class Merchants extends Table {
   TextColumn get login => text()();
   TextColumn get fullName => text()();
@@ -66,11 +70,11 @@ class Merchants extends Table {
   Set<Column> get primaryKey => {login};
 }
 
-@DataClassName('Currency')
+@DataClassName('CurrencyDto')
 class Currencies extends Table {
   TextColumn get alphabeticCode => text()();
   IntColumn get minorUnit => integer()();
-  TextColumn get numericCode => text()();
+  TextColumn get numericCode => text().nullable()();
   TextColumn get name => text().nullable()();
 
   @override

@@ -24,7 +24,6 @@ class Mp3AuthenticationRepository implements AuthenticationRepository {
   final SecureStorage secureStorage;
   final ErrorHandler errorHandler;
 
-
   const Mp3AuthenticationRepository({
     required this.accessibleMerchantsDao,
     required this.merchantsDao,
@@ -52,13 +51,16 @@ class Mp3AuthenticationRepository implements AuthenticationRepository {
       );
       if (merchantResponse is MerchantInformationResponseSuccess) {
         session = authResponse.toSession(merchantResponse);
-        secureStorage.saveSessionId(session.sessionId);
+        final  sessionId = session.sessionId;
+        secureStorage.saveSessionId(sessionId);
         secureStorage.saveMerchantLogin(session.merchant.login);
         secureStorage.saveUserLogin(session.userLogin);
-        sessionDao.saveOrUpdateSession(SessionDto.fromModel(session));
-        //accessibleMerchantsDao.saveAccessibleMerchants();
-        //merchantsDao.saveOrUpdateMerchant();
-        //TODO save session and merchant to db
+        sessionDao.saveOrUpdateSession(session);
+        accessibleMerchantsDao.saveAccessibleMerchants(
+          merchants: session.accessibleMerchants,
+          sessionId: sessionId,
+        );
+        merchantsDao.saveOrUpdateMerchant(session.merchant);
       } else if (merchantResponse is MerchantInformationResponseFail) {
         errorHandler.handleError(merchantResponse.error);
       } else {

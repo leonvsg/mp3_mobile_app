@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
-import 'package:mp3_mobile_app/data/data_sources/db/tables.dart';
+import 'tables.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
-import 'drift_dao/drift_accessible_merchants_dao.dart';
+import 'drift_accessible_merchants_dao.dart';
 
 part 'database.g.dart';
 
