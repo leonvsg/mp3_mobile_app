@@ -6,8 +6,6 @@ import 'tables.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
-import 'drift_accessible_merchants_dao.dart';
-
 part 'database.g.dart';
 
 @DriftDatabase(
@@ -20,9 +18,7 @@ part 'database.g.dart';
     MerchantLocales,
     MerchantPermissions,
     MerchantCurrencies,
-  ],
-  daos: [
-    DriftAccessibleMerchantsDao,
+    SessionPermissions,
   ],
 )
 class AppDb extends _$AppDb {

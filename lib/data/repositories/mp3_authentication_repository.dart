@@ -45,6 +45,7 @@ class Mp3AuthenticationRepository implements AuthenticationRepository {
         sessionDao.saveOrUpdateSession(session);
       } else if (merchantResponse is MerchantInformationResponseFail) {
         //TODO: handle error
+        //throw Authentication
       } else {
         throw RemoteRepositoryException(
           'Unexpected MerchantInformationResponse: ${merchantResponse.toString()}',

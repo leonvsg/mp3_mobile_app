@@ -112,7 +112,7 @@ class DriftMerchantsDao extends DatabaseAccessor<AppDb>
       await batch(
         (batch) => batch.insertAll(
           merchantPermissions,
-          merchant.permissions
+          merchant.options
               .map(
                 (permission) => MerchantPermissionDto(
                   merchant: merchant.login,
@@ -177,7 +177,7 @@ class DriftMerchantsDao extends DatabaseAccessor<AppDb>
             (dto) => _currencyDtoToModel(dto),
           )
           .toList(),
-      permissions: merchantPermissionDto
+      options: merchantPermissionDto
           .map((dto) => _stringToPermission(dto.permission))
           .toList(),
       sessionTimeoutMinutes: merchantDto.sessionTimeoutMinutes,
@@ -199,10 +199,10 @@ class DriftMerchantsDao extends DatabaseAccessor<AppDb>
     );
   }
 
-  Permission _stringToPermission(String str) {
-    var permission = Permission.unknown;
+  MerchantOption _stringToPermission(String str) {
+    var permission = MerchantOption.unknown;
     try {
-      permission = Permission.values.byName(str);
+      permission = MerchantOption.values.byName(str);
     } on ArgumentError {
       //TODO: logging
     }

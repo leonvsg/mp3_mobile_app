@@ -44,6 +44,15 @@ class AccessibleMerchants extends Table {
   Set<Column> get primaryKey => {merchantLogin,session};
 }
 
+@DataClassName('SessionPermissionDto')
+class SessionPermissions extends Table {
+  TextColumn get session => text().references(Sessions, #tokenHash)();
+  TextColumn get permission => text()();
+
+  @override
+  Set<Column> get primaryKey => {session,permission};
+}
+
 @DataClassName('SessionDto')
 class Sessions extends Table {
   TextColumn get tokenHash => text()();

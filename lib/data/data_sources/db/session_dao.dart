@@ -5,4 +5,5 @@ abstract class SessionDao {
   Future<void> saveOrUpdateSession(Session session);
   Future<void> deleteSession(String sessionId);
   Future<void> deleteAllSessions();
+  Future<void> clearOldSessions(DateTime before);
 }

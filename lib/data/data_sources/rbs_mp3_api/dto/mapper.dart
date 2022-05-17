@@ -60,15 +60,70 @@ const paymentTypeExtensionMap = {
   'UNKNOWN': PaymentTypeExtension.unknown,
 };
 
-const permissionMap = {
-  'EDIT_MERCHANT_SETTINGS': Permission.editMerchantSettings,
-  'REFUND': Permission.refund,
-  'DEPOSIT': Permission.deposit,
-  'SEND_PAYMENT_FORM': Permission.sendPaymentForm,
-  'OFD_REFUND': Permission.ofdRefund,
-  'BUNDLE_CATALOG_EDIT': Permission.bundleCatalogEdit,
-  'REVERSE_HOLD': Permission.reverseHold,
-  'REVERSE_DEPOSIT': Permission.reverseDeposit,
+const userPermissionMap = {
+  'EDIT_MERCHANT_SETTINGS': UserPermission.editMerchantSettings,
+  'REFUND': UserPermission.refund,
+  'DEPOSIT': UserPermission.deposit,
+  'SEND_PAYMENT_FORM': UserPermission.sendPaymentForm,
+  'OFD_REFUND': UserPermission.ofdRefund,
+  'BUNDLE_CATALOG_EDIT': UserPermission.bundleCatalogEdit,
+  'REVERSE_HOLD': UserPermission.reverseHold,
+  'REVERSE_DEPOSIT': UserPermission.reverseDeposit,
+  'OFD_CONFIGURATION': UserPermission.ofdConfiguration,
+  'DOWNLOAD_EXTENDED_REPORTS_MP3': UserPermission.downloadExtendedReportsMp3,
+  'CAN_UPLOAD_BO': UserPermission.canUploadBo,
+  'USE_MPI_CERTIFICATES': UserPermission.useMpiCertificates,
+  'UPDATE_SECURE_SETTINGS': UserPermission.updateSecureSettings,
+  'VIEW_POS_OPERATION': UserPermission.viewPosOperation,
+  'CHANGE_PAYS_CERTIFICATES_SETTINGS':
+      UserPermission.changePaysCertificatesSettings,
+  'DECLINE_CREATED_ORDER': UserPermission.declineCreatedOrder,
+  'GENERAL_OPERATOR_MP3': UserPermission.generalOperatorMp3,
+  'EDIT_MERCHANT_SETTINGS_MP3': UserPermission.editMerchantSettingsMp3,
+  'IS_GENERATED_FROM_MP3': UserPermission.isGeneratedFromMp3,
+  'MANAGE_ORDER_TEMPLATES_MP3': UserPermission.manageOrderTemplatesMp3,
+  'DONT_WORK_WITH_ECOM': UserPermission.dontWorkWithEcom,
+};
+
+const merchantOptionMap = {
+  'SEND_ORDER_REGISTRATION_NOTIFICATION':
+      MerchantOption.sendOrderRegistrationNotification,
+  'TWO_PHASE_PAYMENT_ALLOWED': MerchantOption.twoPhasePaymentAllowed,
+  'BINDING_ALLOWED': MerchantOption.bindingAllowed,
+  'ALTERNATIVE_SESSION_TIMEOUT': MerchantOption.alternativeSessionTimeout,
+  'GENERATE_ORDERNUMBER': MerchantOption.generateOrderNumber,
+  'DEPOSIT_CAN_BE_EXCEEDED': MerchantOption.depositCanBeExceeded,
+  'SBERID_ALLOWED': MerchantOption.sberIdAllowed,
+  'CREDIT_SERVICE_ALLOWED': MerchantOption.creditServiceAllowed,
+  'SIMPLE_ORDER_REGISTRATION_ALLOWED':
+      MerchantOption.simpleOrderRegistrationAllowed,
+  'MP3_REDIRECT': MerchantOption.mp3Redirect,
+  'APPLE_PAY_QUICK_BUTTONS': MerchantOption.applePayQuickButtons,
+  'USE_APPLEPAY': MerchantOption.useApplePay,
+  'USE_SAMSUNGPAY': MerchantOption.useSamsungPay,
+  'GOOGLE_PAY_TOKENIZED_ALLOWED': MerchantOption.googlePayTokenizedAllowed,
+  'CAN_TRANSFER_PERSONAL_DATA': MerchantOption.canTransferPersonalData,
+  'WHITE_LIST_DEBIT': MerchantOption.whiteListDebit,
+  'WHITE_LIST_CREDIT': MerchantOption.whiteListCredit,
+  'CAN_UPLOAD_MPI_CERTIFICATES': MerchantOption.canUploadMpiCertificates,
+  'DISPLAY_PAYMENT_LINK': MerchantOption.displayPaymentLink,
+  'PAY_BY_CARD_QUICK_BUTTONS': MerchantOption.payByCardQuickButtons,
+  'PARTIAL_REVERSE': MerchantOption.partialReverse,
+  'ALLOWED_PAYMENT_METHOD_PAYMENT_CREDIT':
+      MerchantOption.allowedPaymentMethodPaymentCredit,
+  'AUTOCOMPLETION_ALLOWED': MerchantOption.autocompletionAllowed,
+  'USE_GENERIC_FINISH_PAYMENT_PAGE': MerchantOption.useGenericFinishPaymentPage,
+  'SEND_PAYER_NOTIFICATION_BY_EMAIL':
+      MerchantOption.sendPayerNotificationByEmail,
+  'P2P_PARTIAL_CREDIT_ALLOWED': MerchantOption.p2pPartialCreditAllowed,
+  'SEND_PAYER_NOTIFICATION_BY_PHONE':
+      MerchantOption.sendPayerNotificationByPhone,
+  'GOOGLE_PAY_CARD_ALLOWED': MerchantOption.googlePayCardAllowed,
+  'YANDEX_PAY_ALLOWED': MerchantOption.yandexPayAllowed,
+  'CALLBACK_OPERATIONS': MerchantOption.callbackOperations,
+  'MASTERCARD_INSTALLMENTS_ALLOWED':
+      MerchantOption.mastercardInstallmentsAllowed,
+  'EASY_OFD_SETUP': MerchantOption.easyOfdSetup,
 };
 
 extension MerchantMapper on MerchantInformationResponseSuccess {
@@ -90,9 +145,9 @@ extension MerchantMapper on MerchantInformationResponseSuccess {
             ),
           )
           .toList(),
-      permissions: options
-          .map((permissionName) => permissionMap[permissionName])
-          .whereType<Permission>()
+      options: options
+          .map((optionName) => merchantOptionMap[optionName])
+          .whereType<MerchantOption>()
           .toList(),
       sessionTimeoutMinutes: sessionTimeoutMinutes,
       locales: locales.map((local) => Locale(local)).toList(),
@@ -200,24 +255,28 @@ extension TransactionListItemMapper on TransactionListItem {
 extension AuthResponseMapper on AuthResponseSuccess {
   Session toSession(MerchantInformationResponseSuccess merchantResponse) {
     return Session(
-      sessionId: sessionId,
-      userLogin: userLogin,
-      merchant: merchantResponse.toEntity(merchantLogin),
-      accessibleMerchants: accessibleMerchants.map((merchant) {
-        MerchantType merchantType = MerchantType.unknown;
-        try {
-          merchantType = MerchantType.values.byName(merchant.merchantType.toLowerCase());
-        } catch (e, s) {
-          //"Merchant type with name ${merchant.merchantType} doesn't exist.
-          //TODO
-        }
+        sessionId: sessionId,
+        userLogin: userLogin,
+        merchant: merchantResponse.toEntity(merchantLogin),
+        accessibleMerchants: accessibleMerchants.map((merchant) {
+          MerchantType merchantType = MerchantType.unknown;
+          try {
+            merchantType =
+                MerchantType.values.byName(merchant.merchantType.toLowerCase());
+          } catch (e, s) {
+            //"Merchant type with name ${merchant.merchantType} doesn't exist.
+            //TODO
+          }
 
-        return AccessibleMerchant(
-          merchantLogin: merchant.merchantLogin,
-          merchantFullName: merchant.merchantFullName,
-          merchantType: merchantType,
-        );
-      }).toList(),
-    );
+          return AccessibleMerchant(
+            merchantLogin: merchant.merchantLogin,
+            merchantFullName: merchant.merchantFullName,
+            merchantType: merchantType,
+          );
+        }).toList(),
+        permissions: permissions
+            .map((permissionName) => userPermissionMap[permissionName])
+            .whereType<UserPermission>()
+            .toList());
   }
 }

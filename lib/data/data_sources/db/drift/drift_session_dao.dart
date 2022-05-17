@@ -12,7 +12,7 @@ import 'tables.dart';
 
 part 'drift_session_dao.g.dart';
 
-@DriftAccessor(tables: [Sessions])
+@DriftAccessor(tables: [Sessions, AccessibleMerchants, SessionPermissions])
 class DriftSessionDao extends DatabaseAccessor<AppDb>
     with _$DriftSessionDaoMixin
     implements SessionDao {
@@ -23,14 +23,24 @@ class DriftSessionDao extends DatabaseAccessor<AppDb>
       : super(db);
 
   @override
-  Future<void> deleteAllSessions() => delete(sessions).go();
+  Future<void> deleteAllSessions() {
+    return transaction(() async {
+      await delete(sessions).go();
+      await delete(sessionPermissions).go();
+    });
+  }
 
   @override
   Future<void> deleteSession(String sessionId) {
     final sessionIdHash = _getSessionIdHash(sessionId);
-    final statement = delete(sessions)
-      ..where((tbl) => tbl.tokenHash.equals(sessionIdHash));
-    return statement.go();
+    return transaction(() async {
+      await (delete(sessions)
+            ..where((tbl) => tbl.tokenHash.equals(sessionIdHash)))
+          .go();
+      await (delete(sessionPermissions)
+            ..where((tbl) => tbl.session.equals(sessionIdHash)))
+          .go();
+    });
   }
 
   @override
@@ -42,11 +52,14 @@ class DriftSessionDao extends DatabaseAccessor<AppDb>
     final accessibleMerchants =
         await _accessibleMerchantsDao.getAccessibleMerchants(sessionId);
     final merchant = await _merchantsDao.getMerchant(sessionDto.merchant);
+    final permissions = select(sessionPermissions)
+      ..where((tbl) => tbl.session.equals(sessionIdHash));
     return _toModel(
       dto: sessionDto,
       merchant: merchant,
       sessionId: sessionId,
       accessibleMerchants: accessibleMerchants,
+      permissions: await permissions.get(),
     );
   }
 
@@ -64,17 +77,36 @@ class DriftSessionDao extends DatabaseAccessor<AppDb>
     });
   }
 
+  @override
+  Future<void> clearOldSessions(DateTime before) {
+    var sessionQuery = select(sessions)
+      ..addColumns([sessions.tokenHash])
+      ..where((tbl) => tbl.registerTime.isSmallerThanValue(before));
+    var accessibleMerchantsDeleteQuery = delete(accessibleMerchants)
+      ..where((tbl) => tbl.session.isInQuery(sessionQuery));
+    var sessionsDeleteQuery = delete(sessions)
+      ..where((tbl) => tbl.registerTime.isSmallerThanValue(before));
+    return transaction(() async {
+      await accessibleMerchantsDeleteQuery.go();
+      await sessionsDeleteQuery.go();
+    });
+  }
+
   Session _toModel({
     required SessionDto dto,
     required Merchant merchant,
     required String sessionId,
     required List<AccessibleMerchant> accessibleMerchants,
+    required List<SessionPermissionDto> permissions,
   }) {
     return Session(
       sessionId: sessionId,
       userLogin: dto.userLogin,
       merchant: merchant,
       accessibleMerchants: accessibleMerchants,
+      permissions: permissions
+          .map((dto) => _stringToPermission(dto.permission))
+          .toList(),
     );
   }
 
@@ -89,5 +121,15 @@ class DriftSessionDao extends DatabaseAccessor<AppDb>
 
   String _getSessionIdHash(String sessionId) {
     return md5.convert(utf8.encode(sessionId)).toString();
+  }
+
+  UserPermission _stringToPermission(String str) {
+    var permission = UserPermission.unknown;
+    try {
+      permission = UserPermission.values.byName(str);
+    } on ArgumentError {
+      //TODO: logging
+    }
+    return permission;
   }
 }

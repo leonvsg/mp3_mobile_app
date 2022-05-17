@@ -11,7 +11,7 @@ class Merchant extends Equatable {
   final String? openIdToken;
   final Currency defaultCurrency;
   final List<Currency> currencies;
-  final List<Permission> permissions;
+  final List<MerchantOption> options;
   final int sessionTimeoutMinutes;
   final List<Locale> locales;
   final String? email;
@@ -25,7 +25,7 @@ class Merchant extends Equatable {
     this.openIdToken,
     required this.defaultCurrency,
     required this.currencies,
-    required this.permissions,
+    required this.options,
     required this.sessionTimeoutMinutes,
     required this.locales,
     this.email,
@@ -41,7 +41,7 @@ class Merchant extends Equatable {
         openIdToken,
         defaultCurrency,
         currencies,
-        permissions,
+        options,
         sessionTimeoutMinutes,
         locales,
         email,
