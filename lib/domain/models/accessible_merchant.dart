@@ -1,21 +1,14 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-enum MerchantType { parent,child,viewable,unknown }
+import 'enums.dart';
 
-class AccessibleMerchant extends Equatable{
-  final String merchantLogin;
-  final String merchantFullName;
-  final MerchantType merchantType;
+part 'accessible_merchant.freezed.dart';
 
-  const AccessibleMerchant({
-    required this.merchantLogin,
-    required this.merchantFullName,
-    required this.merchantType,
-  });
-
-  @override
-  List<Object?> get props => [merchantLogin,merchantFullName,merchantType];
-
-  @override
-  bool get stringify => true;
+@freezed
+class AccessibleMerchant with _$AccessibleMerchant {
+  const factory AccessibleMerchant({
+    required final String merchantLogin,
+    required final String merchantFullName,
+    required final MerchantType merchantType,
+  }) = _AccessibleMerchant;
 }

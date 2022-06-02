@@ -1,20 +1,13 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class AmountRange extends Equatable {
-  late final int minAmount;
-  late final int maxAmount;
+part 'amount_range.freezed.dart';
 
-  AmountRange({
-    required int minAmount,
-    required int maxAmount,
-  }) {
-    this.minAmount = minAmount < 0 ? 0 : minAmount;
-    this.maxAmount = maxAmount < 0 ? 1 : maxAmount;
-  }
-
-  @override
-  bool? get stringify => true;
-
-  @override
-  List<Object> get props => [minAmount, maxAmount];
+@freezed
+class AmountRange with _$AmountRange {
+  @Assert('minAmount >= 0')
+  @Assert('maxAmount >= 0')
+  const factory AmountRange({
+    required final int minAmount,
+    required final int maxAmount,
+  }) = _AmountRange;
 }

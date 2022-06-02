@@ -2,9 +2,14 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
-import 'tables.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:mp3_mobile_app/data/data_sources/db/drift/drift_accessible_merchants_dao.dart';
+import 'package:mp3_mobile_app/data/data_sources/db/drift/drift_currencies_dao.dart';
+import 'package:mp3_mobile_app/data/data_sources/db/drift/drift_merchants_dao.dart';
+import 'package:mp3_mobile_app/data/data_sources/db/drift/drift_session_dao.dart';
 import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
+
+import 'tables.dart';
 
 part 'database.g.dart';
 
@@ -19,6 +24,12 @@ part 'database.g.dart';
     MerchantPermissions,
     MerchantCurrencies,
     SessionPermissions,
+  ],
+  daos: [
+    DriftAccessibleMerchantsDao,
+    DriftCurrenciesDao,
+    DriftMerchantsDao,
+    DriftSessionDao,
   ],
 )
 class AppDb extends _$AppDb {

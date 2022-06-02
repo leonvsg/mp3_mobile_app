@@ -9,7 +9,7 @@ class SimpleHttpClient implements HttpClient {
   static const List<int> _defaultAcceptedResponseCodes = [200];
   final int readTimeout;
 
-  const SimpleHttpClient(this.readTimeout);
+  const SimpleHttpClient([this.readTimeout = 60]);
 
   @override
   Future<String> get(

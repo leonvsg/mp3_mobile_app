@@ -1,3 +1,10 @@
+enum MerchantType {
+  parent,
+  child,
+  viewable,
+  unknown,
+}
+
 enum OfdStatus {
   error,
   sent,

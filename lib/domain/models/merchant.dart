@@ -1,55 +1,26 @@
 import 'dart:ui';
 
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'currency.dart';
 import 'enums.dart';
 
-class Merchant extends Equatable {
-  final String login;
-  final String fullName;
-  final String? openIdToken;
-  final Currency defaultCurrency;
-  final List<Currency> currencies;
-  final List<MerchantOption> options;
-  final int sessionTimeoutMinutes;
-  final List<Locale> locales;
-  final String? email;
-  final String? mainUrl;
-  final List<int>? merchantTerms;
-  final String? knp;
+part 'merchant.freezed.dart';
 
-  const Merchant({
-    required this.login,
-    required this.fullName,
-    this.openIdToken,
-    required this.defaultCurrency,
-    required this.currencies,
-    required this.options,
-    required this.sessionTimeoutMinutes,
-    required this.locales,
-    this.email,
-    required this.mainUrl,
-    this.merchantTerms,
-    this.knp,
-  });
-
-  @override
-  List<Object?> get props => [
-        login,
-        fullName,
-        openIdToken,
-        defaultCurrency,
-        currencies,
-        options,
-        sessionTimeoutMinutes,
-        locales,
-        email,
-        mainUrl,
-        merchantTerms,
-        knp,
-      ];
-
-  @override
-  bool get stringify => true;
+@freezed
+class Merchant with _$Merchant {
+  const factory Merchant({
+    required final String login,
+    required final String fullName,
+    final String? openIdToken,
+    required final Currency defaultCurrency,
+    required final List<Currency> currencies,
+    required final List<MerchantOption> options,
+    required final int sessionTimeoutMinutes,
+    required final List<Locale> locales,
+    final String? email,
+    final String? mainUrl,
+    final List<int>? merchantTerms,
+    final String? knp,
+  }) = _Merchant;
 }

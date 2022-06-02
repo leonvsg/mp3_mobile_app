@@ -1,13 +1,11 @@
 import 'dart:ui';
 
 import 'package:intl/intl.dart';
-
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/auth/auth_response.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/merchant_information/merchant_information_response.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/transaction_list/range.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/transaction_list/transaction_list_item.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/transaction_list/transaction_search_parameters.dart';
-
 import 'package:mp3_mobile_app/domain/models/accessible_merchant.dart';
 import 'package:mp3_mobile_app/domain/models/currency.dart';
 import 'package:mp3_mobile_app/domain/models/enums.dart';
@@ -255,28 +253,29 @@ extension TransactionListItemMapper on TransactionListItem {
 extension AuthResponseMapper on AuthResponseSuccess {
   Session toSession(MerchantInformationResponseSuccess merchantResponse) {
     return Session(
-        sessionId: sessionId,
-        userLogin: userLogin,
-        merchant: merchantResponse.toEntity(merchantLogin),
-        accessibleMerchants: accessibleMerchants.map((merchant) {
-          MerchantType merchantType = MerchantType.unknown;
-          try {
-            merchantType =
-                MerchantType.values.byName(merchant.merchantType.toLowerCase());
-          } catch (e, s) {
-            //"Merchant type with name ${merchant.merchantType} doesn't exist.
-            //TODO
-          }
+      sessionId: sessionId,
+      userLogin: userLogin,
+      merchant: merchantResponse.toEntity(merchantLogin),
+      accessibleMerchants: accessibleMerchants.map((merchant) {
+        MerchantType merchantType = MerchantType.unknown;
+        try {
+          merchantType =
+              MerchantType.values.byName(merchant.merchantType.toLowerCase());
+        } catch (e, s) {
+          //"Merchant type with name ${merchant.merchantType} doesn't exist.
+          //TODO
+        }
 
-          return AccessibleMerchant(
-            merchantLogin: merchant.merchantLogin,
-            merchantFullName: merchant.merchantFullName,
-            merchantType: merchantType,
-          );
-        }).toList(),
-        permissions: permissions
-            .map((permissionName) => userPermissionMap[permissionName])
-            .whereType<UserPermission>()
-            .toList());
+        return AccessibleMerchant(
+          merchantLogin: merchant.merchantLogin,
+          merchantFullName: merchant.merchantFullName,
+          merchantType: merchantType,
+        );
+      }).toList(),
+      permissions: permissions
+          .map((permissionName) => userPermissionMap[permissionName])
+          .whereType<UserPermission>()
+          .toList(),
+    );
   }
 }

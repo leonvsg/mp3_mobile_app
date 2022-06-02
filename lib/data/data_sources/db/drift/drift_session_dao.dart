@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:drift/drift.dart';
-import 'package:mp3_mobile_app/data/data_sources/db/accessible_merchants_dao.dart';
-import 'package:mp3_mobile_app/data/data_sources/db/merchants_dao.dart';
 import 'package:mp3_mobile_app/domain/models.dart';
 
 import '../session_dao.dart';
@@ -16,11 +14,7 @@ part 'drift_session_dao.g.dart';
 class DriftSessionDao extends DatabaseAccessor<AppDb>
     with _$DriftSessionDaoMixin
     implements SessionDao {
-  final MerchantsDao _merchantsDao;
-  final AccessibleMerchantsDao _accessibleMerchantsDao;
-
-  DriftSessionDao(AppDb db, this._merchantsDao, this._accessibleMerchantsDao)
-      : super(db);
+  DriftSessionDao(AppDb db) : super(db);
 
   @override
   Future<void> deleteAllSessions() {
@@ -50,8 +44,9 @@ class DriftSessionDao extends DatabaseAccessor<AppDb>
       ..where((tbl) => tbl.tokenHash.equals(sessionIdHash));
     final sessionDto = await statement.getSingle();
     final accessibleMerchants =
-        await _accessibleMerchantsDao.getAccessibleMerchants(sessionId);
-    final merchant = await _merchantsDao.getMerchant(sessionDto.merchant);
+        await db.driftAccessibleMerchantsDao.getAccessibleMerchants(sessionId);
+    final merchant =
+        await db.driftMerchantsDao.getMerchant(sessionDto.merchant);
     final permissions = select(sessionPermissions)
       ..where((tbl) => tbl.session.equals(sessionIdHash));
     return _toModel(
@@ -66,11 +61,11 @@ class DriftSessionDao extends DatabaseAccessor<AppDb>
   @override
   Future<void> saveOrUpdateSession(Session session) {
     return transaction(() async {
-      await _merchantsDao.saveOrUpdateMerchant(session.merchant);
+      await db.driftMerchantsDao.saveOrUpdateMerchant(session.merchant);
       into(sessions).insertOnConflictUpdate(_toDto(session));
-      await _accessibleMerchantsDao
+      await db.driftAccessibleMerchantsDao
           .deleteAccessibleMerchants(session.sessionId);
-      await _accessibleMerchantsDao.saveAccessibleMerchants(
+      await db.driftAccessibleMerchantsDao.saveAccessibleMerchants(
         merchants: session.accessibleMerchants,
         sessionId: session.sessionId,
       );
