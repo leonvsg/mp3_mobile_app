@@ -49,6 +49,7 @@ class SimpleHttpClient implements HttpClient {
     String? requestBody,
   ]) async {
     var uri = Uri.parse(uriString);
+    //TODO: generate user-agent
     var headers = <String, String>{'User-Agent': 'MP3MobileClient/0.0.1'};
     if (additionalHeaders != null) {
       headers.addAll(additionalHeaders);

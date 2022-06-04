@@ -41,7 +41,7 @@ class Mp3SessionRepository implements SessionRepository {
       session = session.copyWith(merchant: merchant);
     } else if (merchantResponse is MerchantInformationResponseFail) {
       //TODO: handle error
-      //throw UnauthorizedException
+      //throw UnauthorizedException()
     } else {
       throw RemoteRepositoryException(
         'Unexpected MerchantInformationResponse: ${merchantResponse.toString()}',

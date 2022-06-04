@@ -10,6 +10,7 @@ typedef Headers = Map<String, String>;
 class RbsApiDataProvider implements RbsApi {
   //TODO: update http req/res logging
 
+  //TODO: extract to environment settings
   static const _baseUrl = 'https://web.rbsuat.com';
   static const _applicationContextUrl = '$_baseUrl/ab/mp3';
   static const _acceptedResponseCodes = [200, 400];
