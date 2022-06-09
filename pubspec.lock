@@ -374,7 +374,7 @@ packages:
     source: hosted
     version: "0.15.0"
   http:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: http
       url: "https://pub.dartlang.org"
@@ -471,6 +471,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  mp3_client_commons:
+    dependency: "direct main"
+    description:
+      path: "packages/mp3_client_commons"
+      relative: true
+    source: path
+    version: "0.0.1"
   mp3_client_core:
     dependency: "direct main"
     description:

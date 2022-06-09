@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:mp3_mobile_app/common/http/http_client.dart';
+import 'package:mp3_client_commons/mp3_client_commons.dart';
 
 import 'rbs_api.dart';
 import 'dto.dart';
