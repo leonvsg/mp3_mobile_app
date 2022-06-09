@@ -1,3 +1,4 @@
+import 'package:mp3_client_core/mp3_client_core.dart';
 import 'package:mp3_mobile_app/data/data_sources/db/session_dao.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/auth/auth_request.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/auth/auth_response.dart';
@@ -6,9 +7,6 @@ import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/merchant_inform
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/merchant_information/merchant_information_response.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/rbs_api.dart';
 import 'package:mp3_mobile_app/data/data_sources/secure_storage/secure_storage.dart';
-import 'package:mp3_mobile_app/domain/models/session.dart';
-import 'package:mp3_mobile_app/domain/exceptions.dart';
-import 'package:mp3_mobile_app/domain/repositories/authentication_repository.dart';
 
 class Mp3AuthenticationRepository implements AuthenticationRepository {
   final SessionDao sessionDao;

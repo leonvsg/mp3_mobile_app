@@ -1,18 +1,12 @@
 import 'dart:ui';
 
 import 'package:intl/intl.dart';
+import 'package:mp3_client_core/mp3_client_core.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/auth/auth_response.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/merchant_information/merchant_information_response.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/transaction_list/range.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/transaction_list/transaction_list_item.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/transaction_list/transaction_search_parameters.dart';
-import 'package:mp3_mobile_app/domain/models/accessible_merchant.dart';
-import 'package:mp3_mobile_app/domain/models/currency.dart';
-import 'package:mp3_mobile_app/domain/models/enums.dart';
-import 'package:mp3_mobile_app/domain/models/merchant.dart';
-import 'package:mp3_mobile_app/domain/models/orders_search_filter.dart';
-import 'package:mp3_mobile_app/domain/models/session.dart';
-import 'package:mp3_mobile_app/domain/models/simple_order_data.dart';
 
 const _dateFormatPattern = 'yyyy-MM-ddTHH:mm:ss';
 

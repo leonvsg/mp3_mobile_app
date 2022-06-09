@@ -1,4 +1,4 @@
-import 'package:mp3_mobile_app/domain/models.dart';
+import 'package:mp3_client_core/mp3_client_core.dart';
 
 abstract class SessionDao {
   Future<Session> getSession(String sessionId);

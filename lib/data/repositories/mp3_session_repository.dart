@@ -1,12 +1,10 @@
+import 'package:mp3_client_core/mp3_client_core.dart';
 import 'package:mp3_mobile_app/data/data_sources/db/merchants_dao.dart';
 import 'package:mp3_mobile_app/data/data_sources/db/session_dao.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/mapper.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/rbs_api.dart';
 import 'package:mp3_mobile_app/data/data_sources/secure_storage/secure_storage.dart';
-import 'package:mp3_mobile_app/domain/exceptions.dart';
-import 'package:mp3_mobile_app/domain/models/session.dart';
-import 'package:mp3_mobile_app/domain/repositories/session_repository.dart';
 
 class Mp3SessionRepository implements SessionRepository {
   final SecureStorage secureStorage;

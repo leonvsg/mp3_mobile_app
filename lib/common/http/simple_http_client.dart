@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:mp3_mobile_app/domain/exceptions.dart';
+import 'package:mp3_client_core/mp3_client_core.dart';
 
 import 'http_client.dart';
 

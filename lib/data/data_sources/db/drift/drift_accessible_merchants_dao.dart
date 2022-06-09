@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:drift/drift.dart';
-import 'package:mp3_mobile_app/domain/models.dart';
+import 'package:mp3_client_core/mp3_client_core.dart';
 
 import '../accessible_merchants_dao.dart';
 import 'database.dart';

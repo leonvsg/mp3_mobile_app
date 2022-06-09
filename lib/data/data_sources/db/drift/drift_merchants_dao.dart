@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:drift/drift.dart';
-import 'package:mp3_mobile_app/domain/models.dart';
+import 'package:mp3_client_core/mp3_client_core.dart';
 
 import '../merchants_dao.dart';
 import 'database.dart';

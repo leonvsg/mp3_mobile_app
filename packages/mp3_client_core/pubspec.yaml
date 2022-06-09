@@ -1,5 +1,7 @@
 name: mp3_client_core
 description: A new Flutter package project.
+publish_to: 'none'
+
 version: 0.0.1
 
 environment:
