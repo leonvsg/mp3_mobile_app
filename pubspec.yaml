@@ -35,6 +35,7 @@ dependencies:
   flutter_secure_storage: ^5.0.2
   freezed_annotation: ^2.0.3
   json_serializable: ^6.1.5
+  intl: ^0.17.0
   mportal3_client_core:
     path: packages/mportal3_client_core
   commons:
