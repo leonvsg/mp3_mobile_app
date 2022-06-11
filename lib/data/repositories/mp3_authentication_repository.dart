@@ -1,14 +1,12 @@
-import 'package:mp3_client_core/mp3_client_core.dart';
-import 'package:mp3_mobile_app/data/data_sources/db/session_dao.dart';
+import 'package:mportal3_client_core/mportal3_client_core.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/auth/auth_request.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/auth/auth_response.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/mapper.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/merchant_information/merchant_information_request.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/merchant_information/merchant_information_response.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/rbs_api.dart';
-import 'package:mp3_mobile_app/data/data_sources/secure_storage/secure_storage.dart';
 
-class Mp3AuthenticationRepository implements AuthenticationRepository {
+class Mp3AuthenticationRepository implements AuthenticationService {
   final SessionDao sessionDao;
   final RbsApi apiClient;
   final SecureStorage secureStorage;
@@ -36,7 +34,7 @@ class Mp3AuthenticationRepository implements AuthenticationRepository {
       );
       if (merchantResponse is MerchantInformationResponseSuccess) {
         session = authResponse.toSession(merchantResponse);
-        final  sessionId = session.sessionId;
+        final sessionId = session.sessionId;
         secureStorage.saveSessionId(sessionId);
         secureStorage.saveMerchantLogin(session.merchant.login);
         secureStorage.saveUserLogin(session.userLogin);

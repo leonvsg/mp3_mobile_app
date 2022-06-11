@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import 'secure_storage.dart';
+import 'package:mportal3_client_core/mportal3_client_core.dart';
 
 class SecureStorageDataProvider implements SecureStorage {
   static const _sessionIdKey = 'sessionId';

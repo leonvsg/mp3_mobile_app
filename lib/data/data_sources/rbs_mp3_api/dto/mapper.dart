@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:intl/intl.dart';
-import 'package:mp3_client_core/mp3_client_core.dart';
+import 'package:mportal3_client_core/mportal3_client_core.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/auth/auth_response.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/merchant_information/merchant_information_response.dart';
 import 'package:mp3_mobile_app/data/data_sources/rbs_mp3_api/dto/transaction_list/range.dart';
@@ -142,7 +142,7 @@ extension MerchantMapper on MerchantInformationResponseSuccess {
           .whereType<MerchantOption>()
           .toList(),
       sessionTimeoutMinutes: sessionTimeoutMinutes,
-      locales: locales.map((local) => Locale(local)).toList(),
+      locales: locales,
       mainUrl: mainUrl,
       openIdToken: openIdToken,
       merchantTerms: merchantTerms,
