@@ -1,6 +1,6 @@
 name: commons
-description: RBS Dart Commons
-version: 1.0.0
+description: RBS dart common functionality.
+version: 0.0.1
 publish_to: 'none'
 
 environment:
