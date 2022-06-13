@@ -121,3 +121,23 @@ enum MerchantOption {
   easyOfdSetup,
   unknown,
 }
+
+enum FraudStatus {
+  noFraud,
+  fraudDetected,
+}
+
+enum HistoryItemType {
+  //TODO: add history item types
+  unknown,
+}
+
+enum LoyaltyService {
+  sbrfSpasibo,
+  sbrfSbermiles,
+}
+
+enum PaymentMethod {
+  //TODO: add payment methods
+  unknown,
+}

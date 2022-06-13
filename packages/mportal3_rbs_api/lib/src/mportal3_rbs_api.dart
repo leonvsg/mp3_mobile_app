@@ -40,7 +40,6 @@ class Mportal3RbsApi implements Mp3Api {
       acceptedResponseCodes: _acceptedResponseCodes,
     );
     final authResponse = AuthResponse.fromJson(jsonDecode(response));
-    final Session session;
     if (authResponse is AuthResponseSuccess) {
       final merchant = await fetchMerchantInformation(
         merchantLogin: authResponse.merchantLogin,
