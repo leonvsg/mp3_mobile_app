@@ -39,6 +39,7 @@ dependencies:
     path: packages/mportal3_core
   commons:
     path: packages/commons
+  flutter_bloc: ^8.0.1
 
 dev_dependencies:
   flutter_test:
